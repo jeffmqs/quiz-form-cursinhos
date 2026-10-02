@@ -1,0 +1,420 @@
+/* =============== TOKENS / BASE =============== */
+:root{
+  --brand:#a71916; --brand-dark:#800e0e;
+  --ink:#111; --muted:#555; --stroke:#e2e2e2;
+  --radius:18px; --gap:20px; --footer-h:35px;
+  --fs-base:16px;
+}
+@media (max-width:599px){ :root{ --fs-base:clamp(15px,2.5vh + .4vw,18px);} }
+@media (min-width:600px) and (max-width:1023px){ :root{ --fs-base:clamp(16px,2.2vh,19px);} }
+@media (min-width:1024px){ :root{ --fs-base:clamp(16px,1.8vh + .4vw,20px);} }
+
+*{ box-sizing:border-box }
+html,body{ height:100%; margin:0 }
+body{
+  font: var(--fs-base) "Montserrat",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--ink); background:#fff;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+}
+
+#app{
+  min-height:100dvh;
+  display:grid; place-items:start center;
+  padding:24px env(safe-area-inset-right) calc(var(--footer-h) + 24px) env(safe-area-inset-left);
+}
+
+/* =============== SCREENS =============== */
+.screen{
+  width:min(960px,100%);
+  padding:clamp(18px,4vh,42px) clamp(18px,6vw,48px);
+  display:none;
+  border-radius:var(--radius);
+  background:#fff;
+}
+.screen.active{ display:block }
+
+/* Intro full-bleed */
+#screen-intro{
+  background:transparent; border-radius:0; box-shadow:none;
+  width:100%; max-width:none;
+  padding:clamp(24px,6vh,72px) clamp(16px,5vw,64px);
+  text-align:center;
+}
+#screen-intro.active{
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  min-height:calc(100dvh - var(--footer-h) - 48px);
+}
+body:has(#screen-intro.active){
+  background: url("./images/telaquiz.jpg") center/cover no-repeat fixed;
+}
+
+@media (max-width: 599px){
+
+  body:has(#screen-intro.active){
+    background-image: url("./images/tela-mobile.jpeg");
+    background-attachment: scroll;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  #screen-intro .intro-content {
+    padding-top: 55px;
+  }
+}
+
+/* =============== INTRO CONTENT =============== */
+#logo{ width:clamp(140px,18vw,220px); height:auto; margin:16px auto 24px; }
+#introTitle.logo-evento{ display:flex; justify-content:center; margin:24px auto; }
+#introTitle.logo-evento img{
+  width:clamp(180px,38vw,300px);
+  margin-bottom:clamp(14px,2.6vh,28px);
+}
+.intro-content{
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  max-width:960px; width:min(960px,100%);
+}
+#screen-intro .lead{
+  color:#fff; line-height:1.6; max-width:70ch;
+  font-size:clamp(16px,3.6vw,20px);
+  margin:clamp(8px,1.6vh,16px) auto 36px;
+}
+@media (max-width:599px){
+  #logo{ position:absolute; top:12px; right:12px; width:110px; margin:0 }
+  #screen-intro.active{ padding-top:140px; min-height:calc(100dvh - var(--footer-h) - 32px) }
+  #introTitle.logo-evento img{ width:200px }
+}
+
+/* =============== BOTÕES =============== */
+.btn{
+  -webkit-tap-highlight-color:transparent;
+  cursor:pointer; border:0; border-radius:999px;
+  padding:12px 20px; min-height:44px; min-width:150px;
+  font-weight:700; font-family:"Poppins",sans-serif;
+}
+.btn.primary{ background:var(--brand); color:#fff }
+.btn.primary:hover{ background:var(--brand-dark) }
+.btn.primary:disabled{ opacity:.6; cursor:not-allowed }
+#btnStart,#btnToQuiz,#btnNext,#btnSend{ margin:12px auto 0; font-size:1rem }
+#screen-intro #btnStart{ filter:drop-shadow(0 8px 18px rgba(0,0,0,.25)) }
+
+/* === só o texto do botão Iniciar maior em telas pequenas, sem aumentar o botão === */
+@media (max-width:640px){
+  body:not(.totem) #screen-intro #btnStart{
+    font-size:clamp(1.4rem,4.6vw,1.9rem);
+    font-weight:900; line-height:1.1; letter-spacing:.4px;
+    padding:12px 20px; min-width:150px; min-height:44px;
+  }
+}
+
+/* =============== HEADER / VOLTAR =============== */
+.formHeader{ display:flex; align-items:center; gap:8px; margin-bottom:12px }
+.formHeader h2{ margin:0; text-align:left; font-weight:700; color:var(--ink); font-size:clamp(22px,2.3vh + 1vw,36px) }
+.formHeader .btn.ghost{ all:unset; cursor:pointer; display:inline-flex; align-items:center }
+.formHeader .btn.ghost::before{ content:"←"; color:var(--brand); font-size:clamp(28px,4.2vw,50px); line-height:1 }
+
+/* =============== FORM =============== */
+form{ display:grid; gap:var(--gap) }
+.field{ display:grid; gap:8px }
+label, legend{ font-weight:500; color:var(--ink) }
+legend{ margin-bottom:8px }
+.req{ color:var(--brand) }
+
+.segmented{ display:flex; gap:12px; flex-wrap:wrap }
+.segmented label{
+  border:1px solid var(--stroke); padding:10px 14px; border-radius:999px; cursor:pointer;
+}
+.segmented input{ margin-right:8px }
+
+.group.hidden, .subgroup.hidden, .field.hidden{ display:none; }
+
+input[type="text"], input[type="tel"], input[type="email"], input[type="number"], select{
+  width:100%;
+  border:none; border-bottom:2px solid var(--brand); border-radius:0;
+  padding:12px 6px 10px; background-color:transparent; color:var(--ink); font-size:1em;
+}
+select:focus, input:focus{ outline:none; border-bottom-color:var(--brand-dark); }
+input::placeholder{ color:#888 }
+
+/* setinha apenas no select da Série */
+#serie{
+  appearance:none; padding-right:36px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--brand) 50%),
+    linear-gradient(135deg, var(--brand) 50%, transparent 50%);
+  background-position: right 14px center, right 8px center;
+  background-size:6px 6px, 6px 6px; background-repeat:no-repeat;
+}
+
+.error{ color:#b40000; font-style:italic; font-size:.85em; min-height:1em }
+.msg{ text-align:center; color:#1a7f37; min-height:1.2em; font-weight:600 }
+
+/* LGPD menor */
+.field.consent span{ font-size:0.8em; line-height:1.3; color:#444; }
+.consent-label{ display:flex; align-items:flex-start; gap:10px }
+.consent-label input[type="checkbox"]{ margin-top:3px; transform:scale(1.1) }
+
+/* =============== QUIZ =============== */
+.progress{ display:flex; align-items:center; gap:10px; margin-left:auto }
+#progressText{ font-size:.9em; color:#666 }
+.progress .bar{ width:140px; height:8px; background:#eee; border-radius:999px; overflow:hidden }
+#progressBar{ height:100%; width:0%; background:var(--brand); transition:width .25s cubic-bezier(.2,.7,.2,1) }
+
+.quiz-card{ display:grid; gap:16px }
+#qTitle{ text-align:left; font-size:clamp(24px,2.2vh + 1vw,38px); font-weight:700; color:var(--ink) }
+
+.options{ display:grid; gap:12px }
+.option{
+  display:flex; align-items:flex-start; gap:12px;
+  padding:16px 18px; border:1px solid #ddd; border-radius:var(--radius);
+  background:#fafafa; cursor:pointer;
+  transition:background .2s,border-color .2s,color .2s,box-shadow .2s;
+}
+.option:hover{ background:#fff1f1; border-color:var(--brand) }
+.option input{ display:none }
+.option span{
+  flex:1; color:var(--ink); line-height:1.35; font-weight:400;
+  white-space:normal; overflow:visible; text-overflow:unset;
+}
+.option::before{ content:attr(data-letter) "."; font-weight:700; color:var(--brand); margin-right:6px }
+.option.selected{ background:var(--brand); border-color:var(--brand); color:#fff }
+.option.selected span,.option.selected::before{ color:#fff; font-weight:600 }
+
+/* =============== RESULTADO =============== */
+.result{ display:grid; gap:18px }
+.result h3{ margin:0; text-align:center; font-size:clamp(20px,2vh + 1vw,34px); color:var(--brand) }
+.result p{ margin:0; color:var(--muted); text-align:center }
+.result ul{
+  margin:6px auto 0; padding-left:1.25em; list-style:disc; list-style-position:outside;
+  text-align:left; column-gap:28px; columns:1; max-width:80ch;
+}
+.result li{ padding:4px 0; break-inside:avoid }
+.result li::marker{ color:var(--brand) }
+@media (min-width:900px){ .result ul{ columns:2 } }
+#screen-result .actions{ margin-top:32px }
+
+/* =============== RODAPÉ =============== */
+#app-footer{
+  position:fixed; left:0; right:0; bottom:0; height:var(--footer-h);
+  background:#fff; border-top:1px solid #eee; display:grid; place-items:center; padding:0 12px; z-index:10;
+}
+#app-footer p{ margin:0; color:#000; font-size:.70em }
+
+/* =============== TOTEM =============== */
+body.totem #screen-intro{ padding-block:clamp(60px,12vh,200px) }
+body.totem #screen-intro #logo{ width:clamp(120px,12vw,200px); position:absolute; top:12px; right:12px }
+body.totem #screen-intro .lead{
+  font-size:clamp(18px,2.2vh + 1.6vw,30px);
+  line-height:1.55; max-width:min(90ch,86%); margin-bottom:clamp(20px,4vh,40px);
+}
+body.totem #screen-intro #btnStart{
+  font-size:clamp(14px,1.2vh + .9vw,20px);
+  padding:clamp(10px,1.2vh + .6vw,16px) clamp(16px,1.8vh + 1.2vw,28px);
+  min-height:clamp(40px,5.2vh,56px); border-radius:14px;
+}
+
+/* ====== BOTÃO INICIAR: fonte e raio padronizados em TODAS as telas ====== */
+#screen-intro #btnStart{
+  font-size: clamp(1.2rem, 3vw, 1.3rem) !important; 
+  border-radius: 31px !important;                   
+  padding: 10px 18px;                               
+  min-height: 44px;
+  min-width: 170px;
+}
+
+/* =============== FORMULÁRIO RBS =============== */
+
+#screen-signup {
+  width: min(1100px, 100%);
+}
+
+iframe-container {
+  width: 100%;
+  height: 1600px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.iframe-container iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+#btnContinuarQuiz {
+  display: block;
+  margin: 24px auto 0;
+}
+
+@media (max-width: 599px) {
+
+  #screen-signup {
+    padding: 12px;
+  }
+
+  .iframe-container {
+    height: 75vh;
+    min-height: 600px;
+    border-radius: 10px;
+  }
+}
+
+.iframe-container {
+  width: 100%;
+  height: 620px;
+  overflow: auto;
+  background: #fff;
+}
+
+.iframe-container iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.continuar-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0 30px;
+}
+
+#btnContinuarQuiz {
+  display: block;
+  margin: 0 auto;
+}
+
+@media (max-width: 599px) {
+
+  body:has(#screen-intro.active) {
+    background-image: url("./images/tela-mobile.jpeg");
+    background-position: center top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  #screen-intro.active {
+    min-height: calc(100dvh - var(--footer-h));
+    height: auto;
+    padding: 120px 20px 45px;
+    justify-content: flex-start;
+  }
+
+  #screen-intro .intro-content {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  #introTitle.logo-evento {
+    margin: 60px auto 35px;
+  }
+
+  #introTitle.logo-evento img {
+    display: block;
+    width: 200px;
+    max-width: 65vw;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  body.totem #screen-intro .lead {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto 30px;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  #screen-intro #btnStart {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+/* ===== ALTURA FORMULÁRIO RUBEUS ===== */
+
+/* ===== ALTURA FORMULÁRIO RUBEUS ===== */
+
+#screen-signup .iframe-container {
+  height: 900px !important;
+  min-height: 900px !important;
+  max-height: none !important;
+  overflow: hidden !important;
+}
+
+#screen-signup .iframe-container iframe {
+  display: block;
+  width: 100% !important;
+  height: 900px !important;
+  min-height: 900px !important;
+  border: 0 !important;
+}
+
+/* MOBILE */
+@media (max-width: 599px) {
+  #screen-signup .iframe-container,
+  #screen-signup .iframe-container iframe {
+    height: 1050px !important;
+    min-height: 1050px !important;
+  }
+}
+
+/* ===== AJUSTES CADASTRO MOBILE ===== */
+@media (max-width: 599px) {
+
+  /* Reduz a altura do formulário */
+  #screen-signup .iframe-container,
+  #screen-signup .iframe-container iframe {
+    height: 950px !important;
+    min-height: 950px !important;
+  }
+
+  /* Organiza seta + Cadastro */
+  #screen-signup .formHeader {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  /* Área clicável da seta */
+  #screen-signup .formHeader .btn.ghost {
+    width: 34px;
+    min-width: 34px;
+    height: 34px;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* A SETA propriamente dita */
+  #screen-signup .formHeader .btn.ghost::before {
+    font-size: 34px;
+    line-height: 1;
+  }
+
+  /* Mantém Cadastro alinhado com a seta */
+  #screen-signup .formHeader h2 {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@media (max-width: 599px) {
+
+  #screen-signup .formHeader .btn.ghost::before {
+    font-size: 34px;
+    line-height: 1;
+    display: block;
+    transform: translateY(-7px);
+  }
+
+}

@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  />
+
+  <title>O Futuro Espera Por Você — Unicap</title>
+
+  <!-- Montserrat -->
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Poppins -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+
+<body class="totem">
+
+  <main id="app">
+
+
+    <!-- ==========================================
+         TELA 0: INTRO
+    =========================================== -->
+
+    <section
+      id="screen-intro"
+      class="screen active"
+      aria-labelledby="introTitle"
+    >
+      <div class="intro-content">
+
+        <div
+          id="introTitle"
+          class="logo-evento"
+        >
+          <img
+            src="./images/logo_evento.png"
+            alt="Você no Futuro"
+          />
+        </div>
+
+        <p class="lead">
+          Você tem talentos únicos, sonhos que valem a pena e um futuro
+          esperando para ser construído por você. Responda a 10 perguntas
+          rápidas e viva uma experiência que pode te ajudar a enxergar
+          o seu caminho.
+        </p>
+
+        <button
+          id="btnStart"
+          class="btn primary"
+          type="button"
+        >
+          Iniciar
+        </button>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- TELA 1: FORMULÁRIO RBS -->
+<section
+  id="screen-signup"
+  class="screen"
+  aria-labelledby="title-signup"
+>
+
+  <header class="formHeader">
+
+    <button
+      class="btn ghost"
+      type="button"
+      data-back="intro"
+      aria-label="Voltar"
+    ></button>
+
+    <h2 id="title-signup">Cadastro</h2>
+
+  </header>
+
+  <div class="iframe-container">
+
+    <iframe
+      id="formRBS"
+      src="https://unicap.apprbs.com.br/form-escolas"
+      title="Formulário UNICAP"
+      frameborder="0"
+    ></iframe>
+
+  </div>
+</section>
+
+
+    <!-- ==========================================
+         TELA 2: QUIZ
+    =========================================== -->
+
+    <section
+      id="screen-quiz"
+      class="screen"
+      aria-live="polite"
+    >
+
+      <header class="formHeader">
+
+        <button
+          class="btn ghost"
+          type="button"
+          data-back="signup"
+          aria-label="Voltar"
+        ></button>
+
+
+        <div class="progress">
+
+          <span id="progressText">
+            1/10
+          </span>
+
+          <div class="bar">
+            <div id="progressBar"></div>
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <div
+        id="quizCard"
+        class="quiz-card"
+      >
+
+        <h2 id="qTitle">
+          Pergunta
+        </h2>
+
+        <div
+          id="qOptions"
+          class="options"
+        ></div>
+
+        <small
+          class="error"
+          data-for="quiz"
+        ></small>
+
+
+        <button
+          id="btnNext"
+          class="btn primary"
+          type="button"
+        >
+          OK
+        </button>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         TELA 3: RESULTADO
+    =========================================== -->
+
+    <section
+      id="screen-result"
+      class="screen"
+      aria-labelledby="title-result"
+    >
+
+      <header class="formHeader">
+
+        <button
+          class="btn ghost"
+          type="button"
+          data-back="quiz"
+          aria-label="Voltar"
+        ></button>
+
+        <h2 id="title-result">
+          Resultado
+        </h2>
+
+      </header>
+
+
+      <article
+        id="resultContent"
+        class="result"
+      ></article>
+
+
+      <div class="actions">
+
+        <p
+          id="sendMsg"
+          class="msg"
+          role="status"
+          aria-live="polite"
+        ></p>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         RODAPÉ
+    =========================================== -->
+
+    <footer id="app-footer">
+
+      <p>
+        &copy; 2025 Unicap | Developed by Jeff Marques
+      </p>
+
+    </footer>
+
+
+  </main>
+
+
+  <!-- JavaScript -->
+  <script src="./script.js"></script>
+
+<!-- Tracking Rubeus -->
+<script
+  type="text/javascript"
+  src="https://tracking.apprubeus.com.br/libs/RBTracking.min.js?rbclicod=OujLz1xMwy4tgQmrryzo">
+</script>
+
+</body>
+
+</html>
